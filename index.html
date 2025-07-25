@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4U4N 无规则生存服务器</title>
+    <link rel="icon" href="./img/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body class="bg-white">
+    <nav class="fixed w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-['Pacifico'] text-primary"><img src="./img/4u4n.png" alt="#"></span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#features" class="text-gray-700 hover:text-primary">特色</a>
+                    <a href="#ip" class="text-gray-700 hover:text-primary">服务器IP</a>
+                    <a href="#advantages" class="text-gray-700 hover:text-primary">优势</a>
+                    <a href="#rules" class="text-gray-700 hover:text-primary">规则</a>
+                    <a href="#team" class="text-gray-700 hover:text-primary">团队</a>
+                    <a href="#faq" class="text-gray-700 hover:text-primary">常见问题</a>
+                </div>
+                <a href="#features" class="!rounded-button bg-primary text-white px-6 py-2 whitespace-nowrap">立即加入</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-section h-screen flex items-center justify-center text-center text-white"
+        style="background-image: url('./img/banner.png');">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-6xl font-bold mb-6">4U4N 无规则生存服务器</h1>
+            <p class="text-xl mb-8">毫无规则与秩序，开启你的自由生存之旅</p>
+            <a href="#features"
+                class="!rounded-button bg-primary text-white px-8 py-3 text-lg whitespace-nowrap">开始探索</a>
+        </div>
+    </section>
+
+    <section id="features" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16">服务器特色</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-card bg-white p-8 rounded-lg shadow-lg">
+                    <img src="./img/res.jpg" class="w-full h-48 object-cover rounded-lg mb-6" alt="特色功能">
+                    <h3 class="text-xl font-bold mb-4">粘液科技</h3>
+                    <p class="text-gray-600">10+粘液扩展，让你的游玩变得更加有趣。</p>
+                </div>
+                <div class="feature-card bg-white p-8 rounded-lg shadow-lg">
+                    <img src="./img/home.png" class="w-full h-48 object-cover rounded-lg mb-6" alt="特色功能">
+                    <h3 class="text-xl font-bold mb-4">多样指令系统</h3>
+                    <p class="text-gray-600">为你的游玩提供便捷。</p>
+                </div>
+                <div class="feature-card bg-white p-8 rounded-lg shadow-lg">
+                    <img src="./img/geyser.png" class="w-full h-48 object-cover rounded-lg mb-6" alt="特色功能">
+                    <h3 class="text-xl font-bold mb-4">无规则与混乱</h3>
+                    <p class="text-gray-600">服务器支持您的“辅助”mod。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="ip">
+        <div class="bg-primary/5 px-4 text-center py-20">
+            <h2 class="text-4xl font-bold mb-8">服务器地址（主线）</h2>
+            <div class="inline-flex items-center gap-4 bg-white px-8 py-4 rounded-lg shadow-sm">
+                <span id="ip-text" class="text-2xl font-mono">4u4n.qiunaruto.top</span>
+                <button id="copy-ip"
+                    class="px-4 py-2 bg-primary text-white !rounded-button hover:bg-primary/90 whitespace-nowrap">
+                    <i class="far fa-copy mr-2"></i>复制
+                </button>
+            </div>
+            <p class="mt-6 text-gray-600">支持 Java 版本 1.12.2 - 1.21.x，核心目前处于1.21.4</p>
+            <p class="mt-6 text-gray-600">备用线由杭州数据中心提供，限制人数，请进群获取</p>
+        </div>
+    </section>
+
+    <section id="advantages" class="py-12 bg-gray-50">
+        <div class="max-w-[1440px] mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">为什么选择我们？</h2>
+            <div class="grid grid-cols-1 gap-8 md:grid-cols-4">
+                <div class="text-center">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-server text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">高性能服务器</h3>
+                    <p class="text-gray-600">20G内存20核心服务器，确保游戏般运行，最高支持同时在线 100+ 玩家</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">网络安全系统</h3>
+                    <p class="text-gray-600">服务器的内网安全系统强大，保证游玩的低延迟低丢包</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-headset text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">管理日均在线</h3>
+                    <p class="text-gray-600">为你在线解决符合规定的事儿</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-sync text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">定期更新和备份内容</h3>
+                    <p class="text-gray-600">实时更新插件和服务器必要核心，为您的游玩提供紧跟时事的体验，并且定时备份存档，保护您的数据安全</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="rules" class="py-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16">在服务器与群内额外注意</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold mb-4">
+                        <i class="fas fa-gavel text-primary mr-2"></i>
+                        服务器内
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fa fa-times text-red-500 mt-1 mr-2"></i>
+                            <span>禁止服务器内宣传同类服务器，违者踢出或封禁帐号处理</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold mb-4">
+                        <i class="fas fa-handshake text-primary mr-2"></i>
+                        群内
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fa fa-times text-red-500 mt-1 mr-2"></i>
+                            <span>禁止进行真实货币交易</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-times text-red-500 mt-1 mr-2"></i>
+                            <span>禁止在群内发布同类服务器</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-times text-red-500 mt-1 mr-2"></i>
+                            <span>禁止在群内发布违规内容</span>
+                        </li>
+                    </ul>
+                </div>
+                <p class="text-gray-600">
+                    更多内容进群查看</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16">管理团队</h2>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="team-member bg-white p-6 rounded-lg shadow-lg text-center relative">
+                    <img src="./img/notch.png" class="w-32 h-32 rounded-full mx-auto mb-4" alt="管理员">
+                    <h3 class="text-xl font-bold">xiaomu18</h3>
+                    <p class="text-gray-600">腐竹</p>
+                </div>
+                <div class="team-member bg-white p-6 rounded-lg shadow-lg text-center relative">
+                    <img src="./img/Dream.png" class="w-32 h-32 rounded-full mx-auto mb-4" alt="管理员">
+                    <h3 class="text-xl font-bold">婧婧</h3>
+                    <p class="text-gray-600">摆烂策划</p>
+                </div>
+                <div class="team-member bg-white p-6 rounded-lg shadow-lg text-center relative">
+                    <img src="./img/Creeper.png" class="w-32 h-32 rounded-full mx-auto mb-4" alt="管理员">
+                    <h3 class="text-xl font-bold">EarthMe</h3>
+                    <p class="text-gray-600">服务器提供</p>
+                </div>
+                <div class="team-member bg-white p-6 rounded-lg shadow-lg text-center relative">
+                    <img src="./img/Steve.png" class="w-32 h-32 rounded-full mx-auto mb-4" alt="管理员">
+                    <h3 class="text-xl font-bold">klop233</h3>
+                    <p class="text-gray-600">技术支持</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="py-20">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-16">常见问题</h2>
+            <div class="space-y-4">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold mb-2">服务器支不支持货币？</h3>
+                    <p class="text-gray-600">服务器内无货币系统，一切交易请以物换物！</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold mb-2">服务器是否需要正版？</h3>
+                    <p class="text-gray-600">我们同时支持正版和离线模式登录，但推荐使用离线账号以低延迟进入服务器。</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-bold mb-2">遇到问题如何寻求帮助？</h3>
+                    <p class="text-gray-600">加入官方QQ群：758633338获取帮助。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <span class="text-2xl font-['Pacifico'] text-primary"><img src="./img/4u4n.png" alt="#"></span>
+                    <p class="mt-4 text-gray-400">By StarCraft </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">快速链接</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#features" class="text-gray-400 hover:text-white">服务器特色</a></li>
+                        <li><a href="#rules" class="text-gray-400 hover:text-white">服务器和群内规则</a></li>
+                        <li><a href="#team" class="text-gray-400 hover:text-white">管理团队</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">联系我们</h4>
+                    <ul class="space-y-2">
+                        <li class="text-gray-400">QQ群：758633338</li>
+                        <li class="text-gray-400">邮箱：1782764161@qq.com</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">关注我们</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://qm.qq.com/q/ixhYlCRH5C" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-qq text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-weixin text-xl"></i>
+                        </a>
+                        <a href="https://www.bilibili.com/video/BV1sVuRzvEoJ/" class="text-gray-400 hover:text-white">
+                            <i class="fab fa-bilibili text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>© 2020 StarCraft团队 版权所有</p>
+                <p>京ICP备20079823号</p>
+            </div>
+        </div>
+    </footer>
+
+    <button id="backToTop"
+        class="fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+</body>
+
+</html>
