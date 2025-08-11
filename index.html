@@ -35,15 +35,193 @@
         </div>
     </nav>
 
-    <section class="hero-section h-screen flex items-center justify-center text-center text-white"
-        style="background-image: url('./img/banner.png');">
-        <div class="max-w-4xl mx-auto px-4">
+    <section class="hero-section h-screen flex items-center justify-center text-center text-white relative overflow-hidden">
+        <!-- 轮播图片容器 -->
+        <div class="absolute inset-0 z-0">
+            <div class="carousel-slides h-full">
+                <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-100"
+                     style="background-image: url('./img/banner.png'); background-size: cover; background-position: center;"></div>
+                <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0"
+                     style="background-image: url('./img/banner1.png'); background-size: cover; background-position: center;"></div>
+                <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0"
+                     style="background-image: url('./img/banner2.png'); background-size: cover; background-position: center;"></div>
+                <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0"
+                     style="background-image: url('./img/banner3.png'); background-size: cover; background-position: center;"></div>
+                <div class="carousel-slide absolute inset-0 transition-opacity duration-1000 opacity-0"
+                     style="background-image: url('./img/banner4.png'); background-size: cover; background-position: center;"></div>
+            </div>
+            <!-- 半透明遮罩，使文字更清晰 -->
+            <div class="absolute inset-0 bg-black/40 z-10"></div>
+        </div>
+
+        <!-- 内容区域 -->
+        <div class="max-w-4xl mx-auto px-4 relative z-20">
             <h1 class="text-6xl font-bold mb-6">4U4N 无规则生存服务器</h1>
             <p class="text-xl mb-8">毫无规则与秩序，开启你的自由生存之旅</p>
-            <a href="#features"
-                class="!rounded-button bg-primary text-white px-8 py-3 text-lg whitespace-nowrap">开始探索</a>
+            <p class="text-xl mb-8">
+                服务器在线人数:
+                <span id="player-count" class="font-semibold text-green-400">获取中...</span>/
+                <span id="max-players" class="text-gray-300">--</span>
+                <span id="server-status" class="ml-2 px-2 py-0.5 text-xs rounded-full bg-yellow-500">连接中</span>
+                <span id="last-update" class="ml-2 text-xs text-gray-400">(更新中...)</span>
+            </p>
+
+            <script>
+                const serverAddress = "4u4n.qiunaruto.top";
+                const apiUrl = `https://api.mcsrvstat.us/2/${serverAddress}`;
+                const updateInterval = 15000; // 15秒更新一次，缩短间隔提高实时性
+
+                // 更新时间显示
+                function updateLastRefreshTime() {
+                    const now = new Date();
+                    const timeString = now.toLocaleTimeString();
+                    document.getElementById('last-update').textContent = `(最后更新: ${timeString})`;
+                }
+
+                // 更新玩家数量显示
+                function updatePlayerCount(data) {
+                    const playerCountEl = document.getElementById('player-count');
+                    const maxPlayersEl = document.getElementById('max-players');
+                    const statusEl = document.getElementById('server-status');
+
+                    if (data.online) {
+                        // 服务器在线状态
+                        playerCountEl.textContent = data.players.online;
+                        maxPlayersEl.textContent = data.players.max;
+                        statusEl.textContent = "在线";
+                        statusEl.className = "ml-2 px-2 py-0.5 text-xs rounded-full bg-green-500";
+                    } else {
+                        // 服务器离线状态
+                        playerCountEl.textContent = "0";
+                        maxPlayersEl.textContent = data.players?.max || "0";
+                        statusEl.textContent = "离线";
+                        statusEl.className = "ml-2 px-2 py-0.5 text-xs rounded-full bg-red-500";
+                    }
+
+                    updateLastRefreshTime();
+                }
+
+                // 错误处理显示
+                function showError(message) {
+                    const playerCountEl = document.getElementById('player-count');
+                    const statusEl = document.getElementById('server-status');
+
+                    playerCountEl.textContent = "获取失败";
+                    statusEl.textContent = "连接错误";
+                    statusEl.className = "ml-2 px-2 py-0.5 text-xs rounded-full bg-orange-500";
+                    document.getElementById('last-update').textContent = `(${message})`;
+                }
+
+                // 从API获取服务器状态
+                async function fetchServerStatus() {
+                    try {
+                        // 显示加载状态
+                        document.getElementById('last-update').textContent = "(正在更新...)";
+
+                        const response = await fetch(apiUrl, {
+                            method: 'GET',
+                            cache: 'no-store' // 禁用缓存，确保获取最新数据
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`服务器响应错误: ${response.status}`);
+                        }
+
+                        const data = await response.json();
+                        updatePlayerCount(data);
+                        return true; // 成功获取数据
+                    } catch (error) {
+                        console.error("获取服务器状态失败:", error);
+                        showError("稍后重试");
+                        return false; // 获取数据失败
+                    }
+                }
+
+                // 带重试机制的更新函数
+                async function updateWithRetry() {
+                    const success = await fetchServerStatus();
+                    // 如果失败，3秒后立即重试一次
+                    if (!success) {
+                        setTimeout(fetchServerStatus, 3000);
+                    }
+                }
+
+                // 初始加载
+                updateWithRetry();
+
+                // 设置定时更新，确保无刷新自动更新
+                setInterval(updateWithRetry, updateInterval);
+            </script>
+
+            <a href="#features" class="rounded-button bg-primary text-white px-8 py-3 text-lg whitespace-nowrap hover:bg-primary/90 transition-colors">
+                开始探索
+            </a>
+        </div>
+
+        <!-- 轮播指示器 -->
+        <div class="absolute bottom-8 left-0 right-0 flex justify-center gap-2 z-20">
+            <button class="carousel-indicator w-3 h-3 rounded-full bg-white opacity-100" data-index="0"></button>
+            <button class="carousel-indicator w-3 h-3 rounded-full bg-white opacity-50" data-index="1"></button>
+            <button class="carousel-indicator w-3 h-3 rounded-full bg-white opacity-50" data-index="2"></button>
+            <button class="carousel-indicator w-3 h-3 rounded-full bg-white opacity-50" data-index="3"></button>
+            <button class="carousel-indicator w-3 h-3 rounded-full bg-white opacity-50" data-index="4"></button>
         </div>
     </section>
+
+    <script>
+        // 轮播功能实现
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const indicators = document.querySelectorAll('.carousel-indicator');
+            let currentIndex = 0;
+            const slideInterval = 5000; // 5秒切换一次
+
+            // 切换到指定幻灯片
+            function showSlide(index) {
+                // 隐藏所有幻灯片
+                slides.forEach(slide => {
+                    slide.classList.remove('opacity-100');
+                    slide.classList.add('opacity-0');
+                });
+
+                // 重置所有指示器
+                indicators.forEach(indicator => {
+                    indicator.classList.remove('opacity-100');
+                    indicator.classList.add('opacity-50');
+                });
+
+                // 显示当前幻灯片和激活当前指示器
+                slides[index].classList.remove('opacity-0');
+                slides[index].classList.add('opacity-100');
+                indicators[index].classList.remove('opacity-50');
+                indicators[index].classList.add('opacity-100');
+
+                currentIndex = index;
+            }
+
+            // 下一张幻灯片
+            function nextSlide() {
+                let newIndex = (currentIndex + 1) % slides.length;
+                showSlide(newIndex);
+            }
+
+            // 设置自动轮播
+            let interval = setInterval(nextSlide, slideInterval);
+
+            // 点击指示器切换幻灯片
+            indicators.forEach(indicator => {
+                indicator.addEventListener('click', function() {
+                    // 清除自动轮播计时器
+                    clearInterval(interval);
+                    // 切换到对应的幻灯片
+                    showSlide(parseInt(this.dataset.index));
+                    // 重新设置自动轮播
+                    interval = setInterval(nextSlide, slideInterval);
+                });
+            });
+        });
+    </script>
+
 
     <section id="features" class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4">
