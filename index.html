@@ -25,6 +25,7 @@
                 <div class="hidden md:flex space-x-8">
                     <a href="#features" class="text-gray-700 hover:text-primary">特色</a>
                     <a href="#ip" class="text-gray-700 hover:text-primary">服务器IP</a>
+                    <a href="#player-info" class="text-gray-700 hover:text-primary">玩家信息查询</a>
                     <a href="#advantages" class="text-gray-700 hover:text-primary">优势</a>
                     <a href="#rules" class="text-gray-700 hover:text-primary">规则</a>
                     <a href="#team" class="text-gray-700 hover:text-primary">团队</a>
@@ -222,7 +223,6 @@
         });
     </script>
 
-
     <section id="features" class="py-20 bg-gray-50">
         <div class="max-w-7xl mx-auto px-4">
             <h2 class="text-4xl font-bold text-center mb-16">服务器特色</h2>
@@ -258,6 +258,57 @@
             </div>
             <p class="mt-6 text-gray-600">支持 Java 版本 1.12.2 - 1.21.x，核心目前处于1.21.4</p>
             <p class="mt-6 text-gray-600">备用线由杭州数据中心提供，限制人数，请进群获取</p>
+        </div>
+
+    </section>
+    <!-- 玩家信息查询模块 -->
+    <section id="player-info" class="py-10 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-8">玩家信息查询</h2>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="flex flex-col sm:flex-row gap-3 mb-6">
+                    <input
+                            type="text"
+                            id="player-name"
+                            placeholder="输入玩家名称"
+                            class="flex-1 px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    >
+                    <button
+                            id="query-btn"
+                            class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors"
+                    >
+                        查询
+                    </button>
+                </div>
+
+                <!-- 加载状态 -->
+                <div id="loading" class="hidden text-center py-4">
+                    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                    <p class="mt-2 text-gray-600">查询中...</p>
+                </div>
+
+                <!-- 未找到玩家 -->
+                <div id="not-found" class="hidden text-center py-4 text-red-500">
+                    未找到该玩家
+                </div>
+
+                <!-- 查询结果 -->
+                <div id="result" class="hidden">
+                    <h3 class="text-xl font-semibold mb-4" id="result-name"></h3>
+
+                    <!-- 背包 -->
+                    <div class="mb-6">
+                        <h4 class="font-medium text-gray-700 mb-2">背包物品</h4>
+                        <div id="inventory" class="grid grid-cols-9 gap-2 p-3 bg-gray-100 rounded min-h-[100px]"></div>
+                    </div>
+
+                    <!-- PAPI变量 -->
+                    <div>
+                        <h4 class="font-medium text-gray-700 mb-2">玩家属性</h4>
+                        <div id="papi-vars" class="grid grid-cols-2 gap-2 p-3 bg-gray-100 rounded"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -437,5 +488,5 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 </body>
-
+<script src="anti-devtools.js"></script>
 </html>
