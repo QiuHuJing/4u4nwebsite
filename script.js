@@ -861,32 +861,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // 更新预览
-    function updatePreview() {
-        const text = gradientInput.value || '渐变文字预览';
-        const startColor = startColorInput.value;
-        const endColor = endColorInput.value;
-
-        let previewHtml = '';
-        const startR = parseInt(startColor.slice(1, 3), 16);
-        const startG = parseInt(startColor.slice(3, 5), 16);
-        const startB = parseInt(startColor.slice(5, 7), 16);
-        const endR = parseInt(endColor.slice(1, 3), 16);
-        const endG = parseInt(endColor.slice(3, 5), 16);
-        const endB = parseInt(endColor.slice(5, 7), 16);
-
-        for (let i = 0; i < text.length; i++) {
-            const ratio = i / (text.length - 1 || 1);
-            const r = Math.round(startR + (endR - startR) * ratio);
-            const g = Math.round(startG + (endG - startG) * ratio);
-            const b = Math.round(startB + (endB - startB) * ratio);
-            const hex = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
-            previewHtml += `<span style="color: ${hex}">${text[i]}</span>`;
-        }
-
-        textPreview.innerHTML = previewHtml;
-    }
-
     // 生成渐变文字（Minecraft格式）
     function generateGradientText() {
         const text = gradientInput.value;
@@ -908,6 +882,20 @@ document.addEventListener('DOMContentLoaded', function() {
         // 获取符号类型（§ 或 &）
         const symbolType = document.querySelector('input[name="color-symbol"]:checked')?.value || 'section';
         const colorPrefix = symbolType === 'section' ? '§' : '&';
+
+        // 获取选中的文字格式
+        const formats = Array.from(document.querySelectorAll('input[name="text-format"]:checked'))
+            .map(checkbox => {
+                switch(checkbox.value) {
+                    case 'bold': return 'l';      // 粗体格式代码
+                    case 'italic': return 'o';   // 斜体格式代码
+                    case 'underline': return 'n'; // 下划线格式代码
+                    case 'strikethrough': return 'm'; // 删除线格式代码
+                    case 'obfuscated': return 'k'; // 乱码格式代码
+                    default: return '';
+                }
+            })
+            .filter(Boolean);
 
         let result = '';
         const startR = parseInt(startColor.slice(1, 3), 16);
@@ -931,14 +919,59 @@ document.addEventListener('DOMContentLoaded', function() {
             + `${colorPrefix}${gHex[0]}${colorPrefix}${gHex[1]}`
             + `${colorPrefix}${bHex[0]}${colorPrefix}${bHex[1]}`;
 
-        result += colorCode + text[i];
+        // 添加格式代码
+        const formatCodes = formats.map(fmt => colorPrefix + fmt).join('');
+
+        result += colorCode + formatCodes + text[i];
         }
 
         // 显示结果并启用复制按钮
         resultElement.textContent = result;
         resultElement.dataset.result = result;
         copyBtn.disabled = false;
+
+        // 更新预览样式
+        updatePreview();
     }
+
+
+    // 更新预览
+    function updatePreview() {
+            const text = gradientInput.value || '渐变文字预览';
+            const startColor = startColorInput.value;
+            const endColor = endColorInput.value;
+
+            // 获取选中的文字格式
+            const formats = Array.from(document.querySelectorAll('input[name="text-format"]:checked'))
+                .map(checkbox => checkbox.value);
+
+            let previewHtml = '';
+            const startR = parseInt(startColor.slice(1, 3), 16);
+            const startG = parseInt(startColor.slice(3, 5), 16);
+            const startB = parseInt(startColor.slice(5, 7), 16);
+            const endR = parseInt(endColor.slice(1, 3), 16);
+            const endG = parseInt(endColor.slice(3, 5), 16);
+            const endB = parseInt(endColor.slice(5, 7), 16);
+
+            for (let i = 0; i < text.length; i++) {
+                const ratio = i / (text.length - 1 || 1);
+                const r = Math.round(startR + (endR - startR) * ratio);
+                const g = Math.round(startG + (endG - startG) * ratio);
+                const b = Math.round(startB + (endB - startB) * ratio);
+                const hex = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+
+                // 构建样式字符串
+                let style = `color: ${hex};`;
+                if (formats.includes('bold')) style += 'font-weight: bold;';
+                if (formats.includes('italic')) style += 'font-style: italic;';
+                if (formats.includes('underline')) style += 'text-decoration: underline;';
+                if (formats.includes('strikethrough')) style += 'text-decoration: line-through;';
+
+                previewHtml += `<span style="${style}">${text[i]}</span>`;
+            }
+
+            textPreview.innerHTML = previewHtml;
+        }
 
     // 复制到剪贴板
     function copyToClipboard() {
@@ -1004,6 +1037,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // 符号类型切换时更新预览
     document.querySelectorAll('input[name="color-symbol"]').forEach(radio => {
         radio.addEventListener('change', updatePreview);
+    });
+    // 添加格式选择变化时的事件监听
+    document.querySelectorAll('input[name="text-format"]').forEach(checkbox => {
+        checkbox.addEventListener('change', updatePreview);
     });
 
     // ===== 初始化 =====
@@ -1098,6 +1135,148 @@ document.addEventListener('DOMContentLoaded', function() {
     forceBindCharCopy();
     setInterval(forceBindCharCopy, 1000);
 });
+//QQ刷新
+function updateAvatar(qq) {
+    const img = document.getElementById('qqAvatar');
+    const timestamp = new Date().getTime(); // 时间戳，防止缓存
+    img.src = `https://q1.qlogo.cn/g?b=qq&nk=${qq}&s=100&t=${timestamp}`;
+}
 
+// 初始加载
+updateAvatar(1782764161);
+updateAvatar(3466829709);
+updateAvatar(2506442080);
+updateAvatar(3337913379);
+updateAvatar(1564722665);
+updateAvatar(3262178852);
+
+// 每 30 秒刷新一次
+setInterval(() => updateAvatar(1782764161), 30000);
+setInterval(() => updateAvatar(3466829709), 30000);
+setInterval(() => updateAvatar(2506442080), 30000);
+setInterval(() => updateAvatar(3337913379), 30000);
+setInterval(() => updateAvatar(1564722665), 30000);
+setInterval(() => updateAvatar(3262178852), 30000);
+
+// 加载并渲染MD文件内容（修复版 + 表格边框 + 锚点跳转）
+async function loadMcmmoContent() {
+    try {
+        const response = await fetch('mcmmo-commands.md');
+        if (!response.ok) throw new Error('文件加载失败');
+
+        let mdContent = await response.text();
+        const contentElement = document.getElementById('mcmmo-content');
+
+        // 1. 处理标题并添加锚点ID
+        mdContent = mdContent.replace(/^(#+) (.*)$/gm, (match, level, text) => {
+            const id = text.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+            return `<h${level.length} id="${id}" class="text-${4-level.length}xl font-bold mt-${6-level.length} mb-${4-level.length}">${text}</h${level.length}>`;
+        });
+
+        // 2. 处理引用块
+        mdContent = mdContent.replace(/^> (.*)$/gm, '<blockquote class="pl-4 border-l-4 border-gray-300 italic text-gray-700 my-4">$1</blockquote>');
+
+        // 3. 处理表格（加边框线）
+        mdContent = mdContent.replace(/^\|(.*)\|$/gm, (match) => {
+            let cells = match.split('|').filter(c => c.trim() !== '');
+            if (!cells.length) return match;
+            if (cells.some(cell => cell.includes(':-:'))) {
+                return '<tr class="border-b-2 border-gray-300">' +
+                    cells.map(cell => `<th class="px-4 py-2 text-left border border-gray-300">${cell.trim()}</th>`).join('') +
+                    '</tr>';
+            } else {
+                return '<tr class="border-b border-gray-300">' +
+                    cells.map(cell => `<td class="px-4 py-2 border border-gray-300">${cell.trim()}</td>`).join('') +
+                    '</tr>';
+            }
+        });
+        mdContent = mdContent.replace(/((?:<tr[\s\S]*?<\/tr>\s*)+)/g, '<table class="min-w-full border-collapse mb-4 border border-gray-300">$1</table>');
+
+        // 4. 处理无序列表
+        mdContent = mdContent.replace(/^- (.*)$/gm, '<li class="ml-6 mb-1">$1</li>');
+        mdContent = mdContent.replace(/(<li.*?<\/li>)+/gm, '<ul class="list-disc mb-4">$&</ul>');
+
+        // 5. 处理有序列表
+        mdContent = mdContent.replace(/^\d+\. (.*)$/gm, '<li class="ml-6 mb-1">$1</li>');
+        mdContent = mdContent.replace(/(<li.*?<\/li>)+/gm, (match) => {
+            if (!match.includes('ul')) return `<ol class="list-decimal mb-4 ml-6">$&</ol>`;
+            return match;
+        });
+
+        // 6. 处理代码块
+        mdContent = mdContent.replace(/```([\s\S]*?)```/g, '<pre class="bg-gray-100 p-4 rounded-md overflow-x-auto my-4"><code>$1</code></pre>');
+        mdContent = mdContent.replace(/`([^`]+)`/g, '<code class="bg-gray-100 px-1 py-0.5 rounded">$1</code>');
+
+        // 7. 处理链接（支持锚点跳转）
+        mdContent = mdContent.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, href) => {
+            if (href.startsWith('#')) {
+                const targetId = href.substring(1).toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                return `<a href="#${targetId}" class="skill-link text-blue-500 hover:underline">${text}</a>`;
+            }
+            return `<a href="${href}" target="_blank" class="text-blue-500 hover:underline">${text}</a>`;
+        });
+
+        // 8. 处理段落（解决空行间距过大）
+        mdContent = mdContent.replace(/^(?!<h|<ul|<ol|<table|<blockquote|<pre)(.*)$/gm, (match) => {
+            if (match.trim() === '') return '';
+            return `<p class="my-2">${match}</p>`;
+        });
+
+        contentElement.innerHTML = mdContent;
+        initSkillLinks();
+
+    } catch (error) {
+        document.getElementById('mcmmo-content').innerHTML = `
+            <div class="text-center text-red-500 py-10">
+                <i class="fas fa-exclamation-circle text-2xl mb-2"></i>
+                <p>内容加载失败，请稍后重试</p>
+            </div>
+        `;
+        console.error('MD文件加载错误:', error);
+    }
+}
+
+function initSkillLinks() {
+    document.querySelectorAll('.skill-link').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').replace(/^#/, '');
+            const targetElement = document.getElementById(targetId);
+
+            if (targetElement) {
+                const modalContent = document.querySelector('#level-guide-modal .overflow-y-auto');
+                modalContent.scrollTo({
+                    top: targetElement.offsetTop - 20,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+}
+
+function showLevelGuideModal() {
+    const modal = document.getElementById('level-guide-modal');
+    modal.classList.remove('opacity-0', 'invisible');
+    modal.querySelector('div').classList.remove('scale-95');
+    modal.querySelector('div').classList.add('scale-100');
+
+    if (document.getElementById('mcmmo-content').innerHTML.includes('加载内容中')) {
+        loadMcmmoContent();
+    }
+}
+
+function hideLevelGuideModal() {
+    const modal = document.getElementById('level-guide-modal');
+    modal.classList.add('opacity-0', 'invisible');
+    modal.querySelector('div').classList.remove('scale-100');
+    modal.querySelector('div').classList.add('scale-95');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const levelGuideBtn = document.querySelector('a[href="javascript:showLevelGuideModal()"]');
+    if (levelGuideBtn) {
+        levelGuideBtn.addEventListener('click', showLevelGuideModal);
+    }
+});
 // 玩家信息查询模块
 // ？待开发

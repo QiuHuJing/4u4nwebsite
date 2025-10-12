@@ -15,13 +15,53 @@
     }
 }
 
+/* 在style.css中添加以下样式 */
 body {
-    min-height: 1024px;
+    /* 移除原有的白色背景 */
+    background-color: transparent !important;
+    /* 设置背景图片，使用半透明效果 */
+    background-image: url('./img/bgh_1.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    /* 添加半透明遮罩，使文字更易读 */
+    position: relative;
+}
+
+/* 添加半透明遮罩层 */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7); /* 70%不透明度的白色遮罩 */
+    z-index: -1;
+}
+
+/* 如果需要轮播背景图片，可以添加以下动画 */
+@keyframes backgroundSlide {
+    0% { background-image: url('./img/bgh_1.png'); }
+    20% { background-image: url('./img/bgh_2.png'); }
+    40% { background-image: url('./img/bgh_3.png'); }
+    60% { background-image: url('./img/bgh_4.png'); }
+    80% { background-image: url('./img/bgh_5.png'); }
+    100% { background-image: url('./img/bgh_1.png'); }
+}
+
+/* 应用动画（可选） */
+body {
+    animation: backgroundSlide 30s infinite;
+}
+
+/* 调整卡片背景透明度，增强层次感 */
+.bg-white {
+    background-color: rgba(255, 255, 255, 0.9) !important;
 }
 
 .glass-nav {
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.9) !important;
 }
 
 .hero-section {
